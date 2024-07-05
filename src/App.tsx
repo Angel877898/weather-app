@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from './store';
 import { fetchWeatherStart, fetchWeatherSuccess, fetchWeatherFailure } from './store/weatherSlice';
-import { loadUsernameFromStorage, setUsername } from './store/userSlice';
+import { loadUsernameFromStorage } from './store/userSlice';
 import { getWeather, getCoordinates } from './api/weatherService';
 import SearchInput from './components/SearchInput';
 import WeatherCard from './components/WeatherCard';
+import LoginScreen from './components/LoginScreen';
+import LogoutButton from './components/LogoutButton';
 import { Container, Typography, CircularProgress } from '@mui/material';
 
 const App: React.FC = () => {
@@ -29,10 +31,15 @@ const App: React.FC = () => {
     }
   };
 
+  if (!user.username) {
+    return <LoginScreen />;
+  }
+
   return (
     <Container>
       <Typography variant="h4">Weather App</Typography>
-      <Typography variant="h6">Hello, {user.username || 'Guest'}!</Typography>
+      <Typography variant="h6">Hello, {user.username}!</Typography>
+      <LogoutButton />
       <SearchInput onSearch={handleSearch} />
       {weather.loading && <CircularProgress />}
       {weather.error && <Typography color="error">{weather.error}</Typography>}
