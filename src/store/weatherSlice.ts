@@ -1,15 +1,16 @@
+// store/weatherSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface WeatherState {
-  data: any;
   loading: boolean;
   error: string | null;
+  data: any[];
 }
 
 const initialState: WeatherState = {
-  data: null,
   loading: false,
   error: null,
+  data: [],
 };
 
 const weatherSlice = createSlice({
@@ -18,17 +19,21 @@ const weatherSlice = createSlice({
   reducers: {
     fetchWeatherStart(state) {
       state.loading = true;
+      state.error = null;
     },
     fetchWeatherSuccess(state, action: PayloadAction<any>) {
       state.loading = false;
-      state.data = action.payload;
+      state.data.push(action.payload);
     },
     fetchWeatherFailure(state, action: PayloadAction<string>) {
       state.loading = false;
       state.error = action.payload;
     },
+    clearWeather(state) {
+      state.data = [];
+    },
   },
 });
 
-export const { fetchWeatherStart, fetchWeatherSuccess, fetchWeatherFailure } = weatherSlice.actions;
+export const { fetchWeatherStart, fetchWeatherSuccess, fetchWeatherFailure, clearWeather } = weatherSlice.actions;
 export default weatherSlice.reducer;

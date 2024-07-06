@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, Box } from '@mui/material';
 
 interface WeatherCardProps {
   data: any;
@@ -7,7 +7,7 @@ interface WeatherCardProps {
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ data }) => {
   const { temperature, windspeed, weathercode } = data.current_weather;
-  
+
   const weatherConditions: { [key: number]: string } = {
     0: 'Clear sky',
     1: 'Mainly clear',
@@ -40,12 +40,21 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ data }) => {
   };
 
   return (
-    <Card>
+    <Card sx={{
+      minHeight: '200px',
+      background: 'linear-gradient(135deg, #72edf2 10%, #5151e5 100%)',
+      borderRadius: '15px',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+      color: '#fff',
+      padding: '20px',
+    }}>
       <CardContent>
-        <Typography variant="h5">{data.city_name}</Typography>
-        <Typography variant="body2">Temperature: {temperature}°C</Typography>
-        <Typography variant="body2">Wind Speed: {windspeed} m/s</Typography>
-        <Typography variant="body2">Condition: {weatherConditions[weathercode]}</Typography>
+        <Typography variant="h5" sx={{ marginBottom: '10px' }}>{data.city_name}</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <Typography variant="body2">Temperature: {temperature}°C</Typography>
+          <Typography variant="body2">Wind Speed: {windspeed} m/s</Typography>
+          <Typography variant="body2">Condition: {weatherConditions[weathercode]}</Typography>
+        </Box>
       </CardContent>
     </Card>
   );
