@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Autocomplete } from '@mui/material';
+import { TextField, Button, Autocomplete, Box } from '@mui/material';
 
 interface SearchInputProps {
   onSearch: (city: string) => void;
@@ -32,7 +32,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
   };
 
   return (
-    <div>
+    <Box sx={{ display: 'flex', flexDirection:'row' , alignItems: 'center', gap: 2, width:'90%' }}>
       <Autocomplete
         freeSolo
         options={options}
@@ -42,12 +42,28 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
           <TextField
             {...params}
             label="City"
-            
+            variant="outlined"
+            sx={{ width:'300px'  }} 
           />
         )}
       />
-      <Button onClick={handleSearch}>Search</Button>
-    </div>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onClick={handleSearch}
+        sx={{
+          backgroundColor: '#3f51b5',
+          color: '#fff',
+          '&:hover': {
+            backgroundColor: '#303f9f',
+          },
+          width: 'auto' , 
+          height: '56px', 
+        }}
+      >
+        Search
+      </Button>
+    </Box>
   );
 };
 
